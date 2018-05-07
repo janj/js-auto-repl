@@ -21,6 +21,10 @@ const buildDisplay = (elementId, runConfig) => {
 		div.appendChild(newElement);
 		contentElement.appendChild(div);
 	};
+	
+	_.tap(document.createTextNode(runConfig.description), (desc) => {
+		addInDiv(desc);
+	});
 
 	const input = _.tap(document.createElement("input"), (input) => {
 		input.className = "form-control";
@@ -29,7 +33,6 @@ const buildDisplay = (elementId, runConfig) => {
 	
 	const output = _.tap(document.createElement("textArea"), (output) => {
 		output.className = "form-control";
-		addInDiv(output);
 	});
 
 	const getInput = () => {
@@ -48,18 +51,19 @@ const buildDisplay = (elementId, runConfig) => {
 		showOutput
 	};
 
-	const run = () => {
-		const input = getInput();
-		console.log(`${elementId}: Running with input ${input}`);
-		runConfig.runFunc(elementConfig);
-	}
-	
-	_.tap(document.createElement("button"), (runButton) => {
-		runButton.appendChild(document.createTextNode("Run"));
-		runButton.className = "btn btn-default";
-		runButton.onclick = run;
-		addInDiv(runButton);
+	_.tap(document.createElement("div"), (buttonsDiv) => {
+		_.each(runConfig.buttons, (buttonConfig) => {
+			_.tap(document.createElement("button"), (runButton) => {
+				runButton.appendChild(document.createTextNode(buttonConfig.title));
+				runButton.className = "btn btn-default";
+				runButton.onclick = () => buttonConfig.action(elementConfig);
+				buttonsDiv.appendChild(runButton);
+			});
+		});
+		addInDiv(buttonsDiv);
 	});
+
+	addInDiv(output);
 }
 
 
