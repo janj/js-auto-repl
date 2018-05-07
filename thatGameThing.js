@@ -111,7 +111,6 @@ const showStep = (gameConfig) => {
 }
 
 toRun.push({
-	runFunc: showAnimation,
 	description: "This shows probabilities for where a character might end up when starting in a location with equal probability of moving in any direction for a certain number of moves.",
 	buttons: [{title: "Animate", action: showAnimation}, {title: "Show", action: showStep}]
 });
