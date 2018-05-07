@@ -1,0 +1,25 @@
+<html>
+	<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+		<script src="autoRepl.js"></script>
+		<script src="thatGameThing.js"></script>
+		<script type="text/javascript">
+			const buildDisplays = () => {
+				const contentElement = document.getElementById("contentArea");
+				_.each(toRun, (runConfig, index) => {
+					const div = document.createElement("div");
+					div.id = `area${index}`;
+					contentElement.appendChild(div);
+					buildDisplay(div.id, runConfig);
+				});
+			};
+		</script>
+	</head>
+	
+	<body onload="buildDisplays()">
+		<div id="contentArea"></div>
+	</body>
+	
+</html>
