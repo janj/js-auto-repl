@@ -27,7 +27,6 @@ const pigLatinWords = (words) => {
 }
 
 toRun.push({
-	runFunc: showAnimation,
 	description: "Pig Latin",
 	buttons: [{title: "Translate", action: config => config.showOutput(pigLatinWords(config.getInput())) }]
 });

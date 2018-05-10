@@ -92,44 +92,58 @@ const gameHandler = () => {
 	};
 }
 
-const showAnimation = (gameConfig) => {
-	const initialBoard = { "0,0": 100 };
+const boardInteractor = (() => {
+	let boards = [{ "0,0": 100 }];
 	const handler = gameHandler();
-	const userInput = parseInt(gameConfig.getInput());
-	const boardsUpTo = handler.boardsUpToForBoard(userInput, initialBoard);
-	const boardsToAnimate = _.map(boardsUpTo, handler.toArray);
-	animateBoards(boardsToAnimate, gameConfig.showOutput);
-}
 
-const showStep = (gameConfig) => {
-	const initialBoard = { "0,0": 100 };
-	const handler = gameHandler();
-	const userInput = parseInt(gameConfig.getInput());
-	const board = _.last(handler.boardsUpToForBoard(userInput, initialBoard));
-	console.log(`Step ${userInput}`, board);
-	gameConfig.showOutput(displayStringForBoard(handler.toArray(board)));
-}
+	const displayStringForBoard = (board) => {
+		return _.map(board, (row) => {
+			const roundedRow = _.map(row, (value) => _.round(value, 2));
+			let rowString = "";
+			_.each(roundedRow, (value) => {
+				rowString += value;
+				rowString += '\t';
+				if (value < 10) rowString += '\t';
+			});
+			return _.trimEnd(rowString);
+		}).join('\n');
+	}
+	
+	const loadBoardsUpTo = (step) => {
+		if (boards.length >= step) { return; }
+		console.log(`getting boards up to ${step} from ${boards.length}`);
+		const neededCount = step - boards.length;
+		const nextBoards = handler.boardsUpToForBoard(neededCount, _.last(boards));
+		console.log("NEXTBOARDS", nextBoards)
+		boards = boards.concat(nextBoards.slice(1));
+	}
+
+	const animateBoards = (boards, outputFunc) => {
+		if(boards.length === 0) { return; }
+		outputFunc(displayStringForBoard(boards[0]));
+		setTimeout(() => { animateBoards(boards.slice(1), outputFunc); }, 500);
+	}
+	
+	const showAnimation = (config) => {
+		const userInput = parseInt(config.getInput());
+		loadBoardsUpTo(userInput);
+		const boardsToAnimate = _.map(boards.slice(0, userInput), handler.toArray);
+		animateBoards(boardsToAnimate, config.showOutput);
+	}
+
+	const showStep = (config) => {
+		const userInput = parseInt(config.getInput());
+		loadBoardsUpTo(userInput);
+		const board = boards[userInput - 1];
+		console.log(`Step ${userInput}`, board);
+		config.showOutput(displayStringForBoard(handler.toArray(board)));
+	}
+	
+	return { showAnimation, showStep };
+})();
 
 toRun.push({
 	description: "This shows probabilities for where a character might end up when starting in a location with equal probability of moving in any direction for a certain number of moves.",
-	buttons: [{title: "Animate", action: showAnimation}, {title: "Show", action: showStep}]
+	buttons: [{title: "Animate", action: boardInteractor.showAnimation}, {title: "Show", action: boardInteractor.showStep}]
 });
 
-const displayStringForBoard = (board) => {
-	return _.map(board, (row) => {
-		const roundedRow = _.map(row, (value) => _.round(value, 2));
-		let rowString = "";
-		_.each(roundedRow, (value) => {
-			rowString += value;
-			rowString += '\t';
-			if (value < 10) rowString += '\t';
-		});
-		return _.trimEnd(rowString);
-	}).join('\n');
-}
-
-const animateBoards = (boards, outputFunc) => {
-	if(boards.length === 0) { return; }
-	outputFunc(displayStringForBoard(boards[0]));
-	setTimeout(() => { animateBoards(boards.slice(1), outputFunc); }, 500);
-}
