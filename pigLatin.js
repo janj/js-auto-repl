@@ -1,13 +1,9 @@
 const pigLatinWord = (word) => {
-	const isCapitalized = (string) => {
-		return string.slice(0, 1) === string.slice(0, 1).toUpperCase();
-	}
-
 	const capitalizeFirst = (string) => {
 		return string.slice(0, 1).toUpperCase() + string.slice(1);
 	}
 
-	const wasCapitalized = isCapitalized(word);
+	const wasCapitalized = word.slice(0, 1) === word.slice(0, 1).toUpperCase();
 	const regResult = /(\w*)(.*)/.exec(word);
 	const cleanWord = regResult[1];
 	const punctuation = regResult[2];
@@ -25,8 +21,3 @@ const pigLatinWords = (words) => {
 	const pigLatined = _.map(wordArray, pigLatinWord);
 	return pigLatined.join(" ");
 }
-
-toRun.push({
-	description: "Pig Latin",
-	buttons: [{title: "Translate", action: config => config.showOutput(pigLatinWords(config.getInput())) }]
-});

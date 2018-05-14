@@ -1,14 +1,9 @@
-(function styleInit() {
-	const styleRules = [];
-	styleRules.push(".contentArea { padding: 25px; }");
-	styleRules.push(".contentItem { padding-bottom: 10px; }")
-	const style = document.createElement("style");
-	style.type = "text/css";
-	style.innerHTML = styleRules.join("\n");
-	document.head.appendChild(style);
-})();
-
 var toRun = [];
+
+toRun.push({
+	description: "Pig Latin",
+	buttons: [{title: "Translate", action: config => config.showOutput(pigLatinWords(config.getInput())) }]
+});
 
 const buildDisplay = (elementId, runConfig) => {
 	console.log(`Buidling display for element ${elementId}`);
