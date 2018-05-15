@@ -2,20 +2,14 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="style.css"> 
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		<script src="pigLatinVue.js"></script>
 	</head>
 	
 	<body>
-		<div id="pigLatin" class="contentArea">
-			<div class="contentItem">
-				<p>Pig Latin</p>
+		<div>
+			<app class="vue">
 				<pig-latin></pig-latin>
-			</div>
+			</app>
+			<script src="dist/build.js"></script>
 		</div>
 	</body>
-	
 </html>
