@@ -6,14 +6,13 @@
 </template>
 
 <script>
-	import { map } from 'lodash';
+	import { map } from 'lodash'
 	import PigLatin from './PigLatin.vue'
 
 	export default {
 		data () {
 			return {
 				msg: 'Hello from vue-loader!',
-				message: 'Type here, pig latin below.'
 			}
 		},
 		components: {

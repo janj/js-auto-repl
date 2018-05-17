@@ -1,9 +1,13 @@
-var toRun = [];
-
-toRun.push({
-	description: "Pig Latin",
-	buttons: [{title: "Translate", action: config => config.showOutput(pigLatinWords(config.getInput())) }]
-});
+var toRun = [
+	{
+		description: "Pig Latin",
+		buttons: [{title: "Translate", action: config => config.showOutput(pigLatinWords(config.getInput())) }]
+	},
+	{
+		description: "This shows probabilities for where a character might end up when starting in a location with equal probability of moving in any direction for a certain number of moves.",
+		buttons: [{title: "Animate", action: boardInteractor.showAnimation}, {title: "Show", action: boardInteractor.showStep}]
+	}
+];
 
 const buildDisplay = (elementId, runConfig) => {
 	console.log(`Buidling display for element ${elementId}`);

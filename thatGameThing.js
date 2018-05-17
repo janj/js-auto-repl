@@ -141,9 +141,3 @@ const boardInteractor = (() => {
 	
 	return { showAnimation, showStep };
 })();
-
-toRun.push({
-	description: "This shows probabilities for where a character might end up when starting in a location with equal probability of moving in any direction for a certain number of moves.",
-	buttons: [{title: "Animate", action: boardInteractor.showAnimation}, {title: "Show", action: boardInteractor.showStep}]
-});
-
